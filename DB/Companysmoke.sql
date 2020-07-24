@@ -5,8 +5,7 @@ CREATE TABLE Category (
     category_id INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(40) NOT NULL,
 	category_img VARCHAR(255),
-    CONSTRAINT category__pk PRIMARY KEY (category_id),
-    CONSTRAINT category__name__uk UNIQUE (name)
+    CONSTRAINT category__pk PRIMARY KEY (category_id)
 );
 
 CREATE TABLE Product (
