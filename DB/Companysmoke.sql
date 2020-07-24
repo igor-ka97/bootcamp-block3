@@ -17,7 +17,7 @@ CREATE TABLE Product (
 	description TEXT,
 	product_img VARCHAR(255),
 	CONSTRAINT product__pk PRIMARY KEY (product_id),
-	CONSTRAINT product__to__category FOREIGN KEY (category_id) REFERENCES Category (category_id),
+	CONSTRAINT product__to__category FOREIGN KEY (category_id) REFERENCES Category (category_id) ON DELETE CASCADE ON UPDATE CASCADE,
 	CONSTRAINT product__name__uk UNIQUE (category_id, name)
 );
 
@@ -25,8 +25,8 @@ CREATE TABLE ProductCategory (
 	product_id INT NOT NULL,
 	category_id INT NOT NULL,
 	CONSTRAINT productcategory__pk PRIMARY KEY (product_id, category_id),
-	CONSTRAINT productcategory__to__category FOREIGN KEY (category_id) REFERENCES Category (category_id),
-	CONSTRAINT productcategory__to__product FOREIGN KEY (product_id) REFERENCES Product (product_id)
+	CONSTRAINT productcategory__to__category FOREIGN KEY (category_id) REFERENCES Category (category_id) ON DELETE CASCADE ON UPDATE CASCADE,
+	CONSTRAINT productcategory__to__product FOREIGN KEY (product_id) REFERENCES Product (product_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE News (
