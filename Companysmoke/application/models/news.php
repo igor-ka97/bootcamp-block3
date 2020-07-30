@@ -7,6 +7,7 @@ function getAllNews($page) {
     $connection = getConnection();
     $query = "SELECT news_id, title, date, preview FROM News ORDER BY date LIMIT $art,".PAGENEWSCOUNT;
     $result = mysqli_query($connection, $query);
+    $array = array();
     while ($element = mysqli_fetch_assoc($result)) {
         $array[] = $element;
     }
@@ -18,7 +19,6 @@ function getCountPage() {
     $query = "SELECT COUNT(*) AS count FROM News";
     $result = mysqli_query($connection, $query);
     $result =  mysqli_fetch_assoc($result);
-    echo(ceil($result['count']/PAGENEWSCOUNT));
     return ceil($result['count']/PAGENEWSCOUNT);
 }
 

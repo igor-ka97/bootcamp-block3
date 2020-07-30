@@ -37,8 +37,14 @@
 				<span class="menu-toggler">Меню</span>
 				<ul class="menu-togglable">
 					<?php
+						$cur_url = $_SERVER['REQUEST_URI'];
+						$urls = explode('/', $cur_url);
+						$urls[2] = (!empty($urls[2])) ? explode('?',$urls[2])[0] : null;
+						if ($urls[2] == 'news-detail.php') $urls[2] = 'news.php';
+						if ($urls[2] == 'product.php') $urls[2] = 'catalog.php';
 						foreach ($menu as $title=>$url) {
-							if($_SERVER["REQUEST_URI"] == $url) {
+							
+							if($urls[2] == $url || ($title=="Главная" && !$urls[2])) { 
 								echo '<li class="header-nav-item"><span><span class="header-nav-item__link header-nav-item__link_current">'.$title.'</span></span>';
 								if ($_SERVER["REQUEST_URI"] == "/companysmoke/catalog.php") {
 									echo('<ul class="sub-menu">');

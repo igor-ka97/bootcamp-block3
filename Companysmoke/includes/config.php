@@ -7,18 +7,19 @@
     define("DBUSER", "root");
     define("DBPASS", "");
     define("DBNAME", "companysmoke");
-    CONST PAGECOUNT = 1;
+    CONST PAGECOUNT = 6;
     CONST NEWSCOUNT = 6;
     CONST PAGENEWSCOUNT = 4;
+
     $categories_array = getCategories();
     $news_array = getNews();
 
     $menu = array (
         "Главная"=>"/companysmoke", 
-        "Каталог"=>"/companysmoke/catalog.php",
-        "О компании"=>"/companysmoke/about.php", 
-        "Новости"=>"/companysmoke/news.php",
-        "Доставка и оплата"=>"/companysmoke/paydelivery.php", 
-        "Контакты"=>"/companysmoke/contacts.php"
+        "Каталог"=>"catalog.php",
+        "О компании"=>"about.php", 
+        "Новости"=>"news.php",
+        "Доставка и оплата"=>"paydelivery.php", 
+        "Контакты"=>"contacts.php"
     );
 ?>

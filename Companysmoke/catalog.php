@@ -10,7 +10,7 @@ function addWhere($where, $add) {
 
 $where = '';
 $page = 1;
-$category = '';
+$get_category = '';
 
 include('application/models/catalog.php');
 
@@ -18,7 +18,7 @@ if(isset($_GET['id'])) {
     foreach($categories_array as $categories=>$category) {
         if($category['category_id'] == $_GET['id']) {
             $where = addWhere($where, "p.category_id =".$_GET['id']." OR pc.category_id =".$_GET['id']);
-            $category = '&cat_id='.$_GET['id'];
+            $get_category = '&cat_id='.$_GET['id'];
             break;
         }
     }

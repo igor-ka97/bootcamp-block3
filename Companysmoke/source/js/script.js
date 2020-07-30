@@ -151,7 +151,7 @@ $(function () {
 		// Починка флекс-отображения категорий при загрузке страницы
 		flexFix();
 	}
-
+	
 	{ // Секция валидации
 		{ // Группа функций для валидации полей при потере фокуса
 			// Валидация полей формы "Регистрация" на странице "Регистрация"
@@ -225,8 +225,8 @@ $(function () {
 
 			// Валидация формы "Фильтр поиска" на странице "Каталог"
 			$('.search-filter').on('submit', function () {
-				var min = parseFloat($(this).find('.search-filter__input[name="price-from"]').val());
-				var max = parseFloat($(this).find('.search-filter__input[name="price-to"]').val());
+				var min = parseFloat($(this).find('.search-filter__input[name="price_from"]').val());
+				var max = parseFloat($(this).find('.search-filter__input[name="price_to"]').val());
 				// Проверка на пустоту, логичность и неотрицательость
 				if (!(min <= max) || min < 0 || max < 0)
 					return false;
@@ -240,4 +240,6 @@ $(function () {
 			})
 		}
 	}
+
+	
 });

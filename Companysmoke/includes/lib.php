@@ -28,6 +28,16 @@ function getNews() {
     return $array;
 }
 
+function getProductq($id) {
+    $connection = getConnection();
+    $query = "SELECT * FROM Product WHERE product_id = $id";
+    $result = mysqli_query($connection, $query);
+    while ($element = mysqli_fetch_assoc($result)) {
+        $array[] = $element;
+    }
+    return $array;
+}
+
 function pagination($page, $count_pages){
     $forward = null; 
     $pagination = '';
@@ -37,7 +47,7 @@ function pagination($page, $count_pages){
     if(isset($url[1]) && $url[1] != '') {
         $params = explode("&", $url[1]);
         foreach($params as $param){
-            if(!preg_match("#page=#", $param)) $uri .= "{$param}&amp;";
+            if(!preg_match("#page=#", $param)) $uri .= "{$param}&";
         }
     }
 
@@ -53,11 +63,51 @@ function pagination($page, $count_pages){
     return $pagination.$forward;
 }
 
-function breadcrumbs() {
+function breadcrumbs($categories_array = null) {
+    $breadcrambs = "<li class='bread-crumb'><a class='bread-crumb__link' href='/companysmoke'>Главная</a></li> ";
+    $id = (isset($_GET['id'])) ? $_GET['id'] : null;
+    $cat_id = (isset($_GET['cat_id'])) ? $_GET['cat_id'] : null;
     $cur_url = $_SERVER['REQUEST_URI'];
     $urls = explode('/', $cur_url);
-    print_r($urls);
-    $crumbs = array();
-    print_r($crumbs);
+    if (strpos($urls[2], "catalog.php") !== false) {
+        if ($id) {
+            foreach ($categories_array as $categories => $category) {
+                if ($category['category_id'] == $id) {
+                    $name = $category['name'];
+                    break;
+                }  
+            }
+            $breadcrambs .= "<li class='bread-crumb bread-crumb_current'>$name</li>";
+        } else $breadcrambs .= "<li class='bread-crumb bread-crumb_current'>Каталог</li>";
+    } else if (strpos($urls[2], "product.php") !== false) {
+        $product = getProductq($id);
+        $breadcrambs .= "<li class='bread-crumb'><a class='bread-crumb__link' href='catalog.php'>Каталог</a></li>";
+        if($cat_id) {
+            foreach ($categories_array as $categories => $category) {
+                if ($category['category_id'] == $cat_id) {
+                    $name = $category['name'];
+                    break;
+                }  
+            }
+            $breadcrambs .= "<li class='bread-crumb'><a class='bread-crumb__link' href='catalog.php?id=$cat_id'>$name</a></li>";
+        } else {
+            foreach ($categories_array as $categories => $category) {
+                if ($category['category_id'] == $product[0]['category_id']) {
+                    $cat_id = $category['category_id'];
+                    $name = $category['name'];
+                    break;
+                } 
+            } 
+            $breadcrambs .= "<li class='bread-crumb'><a class='bread-crumb__link' href='catalog.php?id=$cat_id'>$name</a></li>";
+        
+    }
+        $breadcrambs .= "<li class='bread-crumb bread-crumb_current'>".$product[0]['name']."</li>";
+    } else if ((strpos($urls[2], "news.php")) !== false) {
+        $breadcrambs .= "<li class='bread-crumb bread-crumb_current'>Новости</li>";
+    } else if (strpos($urls[2], "news-detail.php") !== false) {
+        $breadcrambs .=  "<li class='bread-crumb'><a class='bread-crumb__link' href='news.php'>Новости</a></li>";
+    }
+    echo($breadcrambs);
+
 }
 ?>

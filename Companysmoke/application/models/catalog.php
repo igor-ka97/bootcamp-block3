@@ -11,11 +11,10 @@
         $query = $query." ORDER BY p.product_id";
         $query = $query." LIMIT $art, ". PAGECOUNT;
         $result = mysqli_query($connection, $query);
-
+        $array = array();
         while ($element = mysqli_fetch_assoc($result)) {
             $array[] = $element;
         }
-        print_r($array);
         return $array;
     }
 
@@ -25,7 +24,6 @@
         if ($where != '') $query = $query." WHERE ".$where;
         $result = mysqli_query($connection, $query);
         $result =  mysqli_fetch_assoc($result);
-        echo(ceil($result['count']/PAGECOUNT));
         return ceil($result['count']/PAGECOUNT);
     }
 ?>

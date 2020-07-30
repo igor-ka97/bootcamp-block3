@@ -71,22 +71,33 @@
 			</div>
 			<nav class="footer-nav">
 				<ul class="footer-nav__list">
-					<li class="footer-nav__list-item"><span class="footer-nav__link">Главная</span></li>
-					<li class="footer-nav__list-item"><a class="footer-nav__link" href="catalog.html">Каталог</a></li>
-					<li class="footer-nav__list-item"><a class="footer-nav__link" href="#">О компании</a></li>
-					<li class="footer-nav__list-item"><a class="footer-nav__link" href="#">Новости</a></li>
-					<li class="footer-nav__list-item"><a class="footer-nav__link" href="shipment.html">Доставка и оплата</a></li>
-					<li class="footer-nav__list-item"><a class="footer-nav__link" href="contacts.html">Контакты</a></li>
+				<?php
+						$cur_url = $_SERVER['REQUEST_URI'];
+						$urls = explode('/', $cur_url);
+						$urls[2] = (!empty($urls[2])) ? explode('?',$urls[2])[0] : null;
+						if ($urls[2] == 'news-detail.php') $urls[2] = 'news.php';
+						if ($urls[2] == 'product.php') $urls[2] = 'catalog.php';
+						foreach ($menu as $title=>$url) {
+							
+							if($urls[2] == $url || ($title=="Главная" && !$urls[2])) { 
+								echo '<li class="footer-nav__list-item"><span class="footer-nav__link">'.$title.'</span></li>';
+							}
+						else {
+								echo '<li class="footer-nav__list-item"><a class="footer-nav__link" href="'.$url.'">'.$title.'</a></li>';
+							}
+						}
+					?>
+					
 				</ul>
 			</nav>
 			<div class="developer">
-				<span class="developer__ref">Разработка сайта - <a class="developer__link" href="#">ITConstruct</a></span>
+				<span class="developer__ref">Разработка сайта - <a class="developer__link" href="https://itconstruct.ru/">ITConstruct</a></span>
 				<img class="counter" src="/companysmoke/source/img/counter.png" alt="Page-counter">
 			</div>
 		</div>
 	</footer>
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-	<script src="/companysmoke/source/js/script3.js"></script>
+	<script src="/companysmoke/source/js/script.js"></script>
 </body>
 
 </html>
