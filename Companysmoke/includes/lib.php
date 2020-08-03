@@ -28,14 +28,54 @@ function getNews() {
     return $array;
 }
 
-function getProductq($id) {
-    $connection = getConnection();
-    $query = "SELECT * FROM Product WHERE product_id = $id";
-    $result = mysqli_query($connection, $query);
-    while ($element = mysqli_fetch_assoc($result)) {
-        $array[] = $element;
+
+function showMenu() {
+    $current_page = currentPage();
+    if ($current_page == 'news-detail.php') $current_page = 'news.php';
+    if ($current_page == 'product.php') $current_page = 'catalog.php';
+    if ($current_page == '') $current_page = 'index.php';
+    global $menu;
+    foreach ($menu as $menu_item=>$item) {
+            if($current_page == $menu_item) { 
+                echo '<li class="header-nav-item"><span><span class="header-nav-item__link header-nav-item__link_current">'.$item['title'].'</span></span>';
+            
+            if($current_page == "catalog.php") {
+                echo('<ul class="sub-menu">');
+                foreach($item['categories'] as $categories=>$category) {
+                    echo('<li class="sub-menu__list-item"><a class="sub-menu__link" href=" /catalog.php?id='.$category['category_id'].'">'.$category['name'].'</a></li>');
+                }
+                echo('</ul>');
+            }
+            echo('</li>');
+        }
+    else {
+            echo '<li class="header-nav-item"><span><a class="header-nav-item__link" href="'.$menu_item.'">'.$item['title'].'</a></span></li>';
+        }
+    
     }
-    return $array;
+}
+
+function showMenuFooter() {
+    $current_page = currentPage();
+    if ($current_page == 'news-detail.php') $current_page = 'news.php';
+    if ($current_page == 'product.php') $current_page = 'catalog.php';
+    if ($current_page == '') $current_page = 'index.php';
+    global $menu;
+    foreach ($menu as $menu_item=>$item) {
+        if($current_page == $menu_item) { 
+            echo '<li class="footer-nav__list-item"><span class="footer-nav__link">'.$item['title'].'</span></li>';
+        }
+        else {
+            echo '<li class="footer-nav__list-item"><a class="footer-nav__link" href="'.$menu_item.'">'.$item['title'].'</a></li>';
+        }
+    }
+}
+
+function currentPage() {
+    $cur_url = $_SERVER['REQUEST_URI'];
+	$urls = explode('/', $cur_url);
+    $urls[1] = (!empty($urls[1])) ? explode('?',$urls[1])[0] : null;
+    return $urls[1];						
 }
 
 function pagination($page, $count_pages){
@@ -61,53 +101,5 @@ function pagination($page, $count_pages){
     }
 
     return $pagination.$forward;
-}
-
-function breadcrumbs($categories_array = null) {
-    $breadcrambs = "<li class='bread-crumb'><a class='bread-crumb__link' href='/companysmoke'>Главная</a></li> ";
-    $id = (isset($_GET['id'])) ? $_GET['id'] : null;
-    $cat_id = (isset($_GET['cat_id'])) ? $_GET['cat_id'] : null;
-    $cur_url = $_SERVER['REQUEST_URI'];
-    $urls = explode('/', $cur_url);
-    if (strpos($urls[2], "catalog.php") !== false) {
-        if ($id) {
-            foreach ($categories_array as $categories => $category) {
-                if ($category['category_id'] == $id) {
-                    $name = $category['name'];
-                    break;
-                }  
-            }
-            $breadcrambs .= "<li class='bread-crumb bread-crumb_current'>$name</li>";
-        } else $breadcrambs .= "<li class='bread-crumb bread-crumb_current'>Каталог</li>";
-    } else if (strpos($urls[2], "product.php") !== false) {
-        $product = getProductq($id);
-        $breadcrambs .= "<li class='bread-crumb'><a class='bread-crumb__link' href='catalog.php'>Каталог</a></li>";
-        if($cat_id) {
-            foreach ($categories_array as $categories => $category) {
-                if ($category['category_id'] == $cat_id) {
-                    $name = $category['name'];
-                    break;
-                }  
-            }
-            $breadcrambs .= "<li class='bread-crumb'><a class='bread-crumb__link' href='catalog.php?id=$cat_id'>$name</a></li>";
-        } else {
-            foreach ($categories_array as $categories => $category) {
-                if ($category['category_id'] == $product[0]['category_id']) {
-                    $cat_id = $category['category_id'];
-                    $name = $category['name'];
-                    break;
-                } 
-            } 
-            $breadcrambs .= "<li class='bread-crumb'><a class='bread-crumb__link' href='catalog.php?id=$cat_id'>$name</a></li>";
-        
-    }
-        $breadcrambs .= "<li class='bread-crumb bread-crumb_current'>".$product[0]['name']."</li>";
-    } else if ((strpos($urls[2], "news.php")) !== false) {
-        $breadcrambs .= "<li class='bread-crumb bread-crumb_current'>Новости</li>";
-    } else if (strpos($urls[2], "news-detail.php") !== false) {
-        $breadcrambs .=  "<li class='bread-crumb'><a class='bread-crumb__link' href='news.php'>Новости</a></li>";
-    }
-    echo($breadcrambs);
-
 }
 ?>

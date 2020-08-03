@@ -1,12 +1,11 @@
 <?php
-include_once("includes/lib.php");
-include_once("includes/config.php");
-
-function getNew($id) {
-    $connection = getConnection();
-    $query = "SELECT * FROM News WHERE news_id = ".$id;
-    $result = mysqli_query($connection, $query);
-    $result =  mysqli_fetch_assoc($result);
-    return $result;
-}
+$news_array = getNews();
+$query = "SELECT * FROM News WHERE news_id = ".$current_param['news_id'];
+$news = mysqli_query($connection, $query);
+$news =  mysqli_fetch_assoc($news);
+if(!$news) header("location: 404.php");
+$breadcrumbs = array();
+$breadcrumbs['Главная'] = '/';
+$breadcrumbs['Новости'] = 'news.php';
+include('application/views/news-detail.php');
 ?>

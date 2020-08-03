@@ -3,23 +3,35 @@
     //или через JSON
     //или через ассоциативный массив
     
-    define("DBHOST", "localhost");
-    define("DBUSER", "root");
-    define("DBPASS", "");
-    define("DBNAME", "companysmoke");
+    CONST DBHOST = 'localhost';
+    CONST DBUSER = 'root';
+    CONST DBPASS = '';
+    CONST DBNAME = 'companysmoke';
     CONST PAGECOUNT = 6;
     CONST NEWSCOUNT = 6;
     CONST PAGENEWSCOUNT = 4;
 
-    $categories_array = getCategories();
-    $news_array = getNews();
-
+    $connection = getConnection();
+    
     $menu = array (
-        "Главная"=>"/companysmoke", 
-        "Каталог"=>"catalog.php",
-        "О компании"=>"about.php", 
-        "Новости"=>"news.php",
-        "Доставка и оплата"=>"paydelivery.php", 
-        "Контакты"=>"contacts.php"
+        'index.php'=> [
+            'title' => 'Главная'
+        ], 
+        'catalog.php' => [
+            'title' => 'Каталог',
+            'categories' => getCategories()
+        ],
+        'about.php' => [
+            'title' => 'О компании'
+        ], 
+        'news.php' => [
+            'title' => 'Новости'
+        ],
+        'paydelivery.php' => [
+            'title' => 'Доставка и оплата'
+        ], 
+        'contacts.php' => [
+            'title' => 'Контакты'
+        ]
     );
 ?>

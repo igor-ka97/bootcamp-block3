@@ -1,10 +1,9 @@
 <?php
-include('includes/lib.php');
-include('includes/config.php');
-
-include('application/views/includes/template_header.php');
+	include('includes/lib.php');
+	include('includes/config.php');
+	include('application/views/includes/template_header.php');
+	$news_array = getNews();
 ?>
-
 <main class="inside-content">
 	<article class="shipment-article">
 		<h1>Доставка</h1>
@@ -29,7 +28,6 @@ include('application/views/includes/template_header.php');
 		<p><i>Также, Вы имеете возможность приобрести товары в нашем шоу-руме на м.Сходненская</i></p>
 	</article>
 </main>
-	
 <?php
-include('application/views/includes/template_footer.php');
+	include('application/views/includes/template_footer.php');
 ?>
