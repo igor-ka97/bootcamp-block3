@@ -3,8 +3,9 @@
     include("includes/config.php");
     include("application/views/includes/template_header.php");
     $news_array = getNews();
+    $categories = getCategories();
 ?>
-<main class="inside-content">Здесь информация о компании</main>
+Здесь информация о компании
 <?php
     include("application/views/includes/template_footer.php");
 ?>

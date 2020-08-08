@@ -1,38 +1,53 @@
 <?php
     $news_array = getNews();
-    $where1 = '';
-    $where2 = '';
+    $categories = getCategories();
+
+    if(isset($correct_param['category_id']) && !array_key_exists($correct_param['category_id'], $categories)) header("location: 404.php");
+
+    $where_from_prod = '';
+    $where_from_prodcat = '';
     foreach ($correct_param as $param=>$value) {
-        if ($param == 'category_id') $sign = 'category_id =';
-        if ($param == 'price_from') $sign = 'p.price >= ';
-        if ($param == 'price_to') $sign = 'p.price <= ';
-        if ($where1 == '') {
+        switch ($param) {
+            case 'category_id':
+                $sign = 'category_id =';
+                break;
+            case 'price_from':
+                $sign = 'p.price >= ';
+                break;
+            case 'price_to':
+                $sign = 'p.price <= ';
+                break;
+        }
+
+        if ($where_from_prod == '') {
             if ($param == 'category_id') {
-                $where1 .= "p.$sign $value";
-                $where2 .= "pc.$sign $value";
+                $where_from_prod .= "p.$sign $value";
+                $where_from_prodcat .= "pc.$sign $value";
             } else {
-                $where1 .= "$sign $value";
-                $where2 .= "$sign $value";
+                $where_from_prod .= "$sign $value";
+                $where_from_prodcat .= "$sign $value";
             }
         }
         else {
-            $where1 .= " AND $sign $value";
-            $where2 .= " AND $sign $value";
+            $where_from_prod .= " AND $sign $value";
+            $where_from_prodcat .= " AND $sign $value";
         }
     }
-    $query1 = "SELECT product_id, product_img, name, price FROM Product p";
-    $query2 = "SELECT p.product_id, p.product_img, p.name, p.price FROM Product p JOIN ProductCategory pc ON p.product_id = pc.product_id";
-    if ($where1 != '') $query1 = $query1." WHERE ".$where1;
-    if ($where2 != '') $query2 = $query2." WHERE ".$where2;
-    $query = "SELECT COUNT(*) AS count FROM ($query1 UNION $query2) AS Products";
+
+    $query_from_prod = "SELECT product_id, product_img, name, price FROM Product p";
+    $query_from_prodcat = "SELECT p.product_id, p.product_img, p.name, p.price FROM Product p JOIN ProductCategory pc ON p.product_id = pc.product_id";
+    if ($where_from_prod != '') $query_from_prod = $query_from_prod." WHERE ".$where_from_prod;
+    if ($where_from_prodcat != '') $query_from_prodcat = $query_from_prodcat." WHERE ".$where_from_prodcat;
+    $query = "SELECT COUNT(*) AS count FROM ($query_from_prod UNION $query_from_prodcat) AS Products";
     $count_pages = mysqli_query($connection, $query);
     $count_pages =  mysqli_fetch_assoc($count_pages);
     $count_pages = ceil($count_pages['count']/PAGECOUNT);
     if( !$count_pages ) $count_pages = 1;
     if( $page > $count_pages ) $page = $count_pages;
-    $pagination = pagination($page, $count_pages);
+    $pagination = pagination($page, $count_pages, $correct_param);
     $art = ($page * PAGECOUNT) - PAGECOUNT;
-    $query = "SELECT * FROM ($query1 UNION $query2) AS Products";
+
+    $query = "SELECT * FROM ($query_from_prod UNION $query_from_prodcat) AS Products";
     $query = $query." ORDER BY product_id";
     $query = $query." LIMIT $art, ". PAGECOUNT;
     $result = mysqli_query($connection, $query);
@@ -43,18 +58,13 @@
     $breadcrumbs = array();
     $breadcrumbs['Главная'] = '/';
     if (array_key_exists('category_id', $correct_param)) {
-        foreach ($menu['catalog.php']['categories'] as $categories => $category) {
-            if ($category['category_id'] == $correct_param['category_id']) {
-                $name = $category['name'];
-                break;
-            }  
-        }
+        $name = $categories[$correct_param['category_id']]['title'];
         $breadcrumbs["$name"] = null;
-        $category = '&cat_id='.$correct_param['category_id'];
+        $cat_param = '&cat_id='.$correct_param['category_id'];
     }
     else {
         $breadcrumbs['Каталог'] = null;
-        $category = null;
+        $cat_param = null;
     }
     include('application/views/catalog.php');
 ?>

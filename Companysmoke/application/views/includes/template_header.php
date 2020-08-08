@@ -9,7 +9,7 @@
 	<link rel="stylesheet" href="/source/css/stylesheet.css">
 	<link rel="shortcut icon" href="/source/img/favicon.png" type="image/png">
 	<link rel="alternate" href="https://allfont.ru/allfont.css?fonts=arial-narrow">
-	<title>Company - Интернет-магазин электронных сигарет. <?=$menu[currentPage()]['title']?></title>
+	<title><?=(isset($breadcrumbs)) ? array_key_last($breadcrumbs) : $menu[currentPage()]['title']?></title>
 </head>
 
 <body>
@@ -36,10 +36,31 @@
 			<div class="wrapper">
 				<span class="menu-toggler">Меню</span>
 				<ul class="menu-togglable">
-					<?showMenu()?>
+					<?
+						$current_page = currentPage();
+						foreach ($menu as $menu_item=>$item) {
+								if($current_page == $menu_item) { 
+									echo '<li class="header-nav-item"><span><span class="header-nav-item__link header-nav-item__link_current">'.$item['title'].'</span></span>';
+								
+								if($current_page == "catalog.php") {
+									echo('<ul class="sub-menu">');
+									foreach($item['submenu'] as $category=>$cat_item) {
+										echo('<li class="sub-menu__list-item"><a class="sub-menu__link" href="catalog.php?id='.$category.'">'.$cat_item['title'].'</a></li>');
+									}
+									echo('</ul>');
+								}
+								echo('</li>');
+							}
+						else {
+								echo '<li class="header-nav-item"><span><a class="header-nav-item__link" href="'.$menu_item.'">'.$item['title'].'</a></span></li>';
+							}
+						
+						}
+					?>
 				</ul>
 			</div>
 		</nav>
 	</header>
 	<div class="content">
 		<div class="wrapper content__wrapper">
+		<main class="<?=(currentPage() == '' || currentPage() == 'index.php') ? "categories" : "inside-content"?>">

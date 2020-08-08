@@ -1,5 +1,6 @@
 <?php
 $news_array = getNews();
+$categories = getCategories();
 $feedback_bool = true;
 if($_POST && !(isset($_SESSION['feedback']))) {
     $_SESSION['feedback'] = 'Сообщение отправлено';

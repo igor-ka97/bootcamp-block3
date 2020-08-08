@@ -1,9 +1,11 @@
+
+</main>	
 <div class="sidebar">
 	<section class="catalog">
 		<h2 class="sidebar__headline">Каталог</h2>
 		<ul class="catalog-list">
-			<?foreach($menu['catalog.php']['categories'] as $categories=>$category):?>
-				<li class="catalog-list__item"><a class="catalog-list__link" href="/catalog.php?id=<?=$category['category_id']?>"><?=$category['name']?></a></li>
+			<?foreach($categories as $category=>$cat_item):?>
+				<li class="catalog-list__item"><a class="catalog-list__link" href="/catalog.php?id=<?=$category?>"><?=$cat_item['title']?></a></li>
 			<?endforeach?>
 		</ul>
 	</section>
@@ -69,7 +71,20 @@
 		</div>
 		<nav class="footer-nav">
 			<ul class="footer-nav__list">
-				<?showMenuFooter()?>
+				<?
+					$current_page = currentPage();
+					if ($current_page == 'news-detail.php') $current_page = 'news.php';
+					if ($current_page == 'product.php') $current_page = 'catalog.php';
+					if ($current_page == '') $current_page = 'index.php';
+					foreach ($menu as $menu_item=>$item) {
+						if($current_page == $menu_item) { 
+							echo '<li class="footer-nav__list-item"><span class="footer-nav__link">'.$item['title'].'</span></li>';
+						}
+						else {
+							echo '<li class="footer-nav__list-item"><a class="footer-nav__link" href="'.$menu_item.'">'.$item['title'].'</a></li>';
+						}
+					}
+				?>
 			</ul>
 		</nav>
 		<div class="developer">

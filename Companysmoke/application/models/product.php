@@ -1,5 +1,6 @@
 <?php
 $news_array = getNews();
+$categories = getCategories();
 $query = "SELECT EXISTS(SELECT product_id FROM Product WHERE product_id =".$correct_param['id'].") AS exists_product";
 $exists_product = mysqli_query($connection, $query);
 $exists_product =  mysqli_fetch_assoc($exists_product);
@@ -24,21 +25,11 @@ $breadcrumbs = array();
 $breadcrumbs['Главная'] = '/';
 $breadcrumbs['Каталог'] = 'catalog.php';
 if (array_key_exists('cat_id', $correct_param)) {
-    foreach ($menu['catalog.php']['categories'] as $categories => $category) {
-        if ($category['category_id'] == $correct_param['cat_id']) {
-            $cat_id =  $correct_param['cat_id'];
-            $name = $category['name'];
-            break;
-        }  
-    }
+    $name = $categories[$correct_param['cat_id']]['title'];
+    $cat_id = $correct_param['cat_id'];
 } else {
-    foreach ($menu['catalog.php']['categories'] as $categories => $category) {
-        if ($category['category_id'] == $product['category_id']) {
-            $cat_id = $category['category_id'];
-            $name = $category['name'];
-            break;
-        } 
-    } 
+    $name = $categories[$product['category_id']]['title'];
+    $cat_id = $product['category_id'];
 }
 $breadcrumbs[$name] = 'catalog.php?id='.$cat_id;
 $breadcrumbs[$product['name']] = null;

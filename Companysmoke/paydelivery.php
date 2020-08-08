@@ -3,8 +3,8 @@
 	include('includes/config.php');
 	include('application/views/includes/template_header.php');
 	$news_array = getNews();
+	$categories = getCategories();
 ?>
-<main class="inside-content">
 	<article class="shipment-article">
 		<h1>Доставка</h1>
 		<p><b>Уважаемые покупатели!</b></p>
@@ -27,7 +27,6 @@
 		<p>Доставка за пределы МКАД - по договоренности</p>
 		<p><i>Также, Вы имеете возможность приобрести товары в нашем шоу-руме на м.Сходненская</i></p>
 	</article>
-</main>
 <?php
 	include('application/views/includes/template_footer.php');
 ?>

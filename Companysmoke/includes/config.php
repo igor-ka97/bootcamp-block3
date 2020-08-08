@@ -15,23 +15,28 @@
     
     $menu = array (
         'index.php'=> [
-            'title' => 'Главная'
+            'title' => 'Главная',
+            'submenu' => null
         ], 
         'catalog.php' => [
             'title' => 'Каталог',
-            'categories' => getCategories()
+            'submenu' => getCategories()
         ],
         'about.php' => [
-            'title' => 'О компании'
+            'title' => 'О компании',
+            'submenu' => null
         ], 
         'news.php' => [
-            'title' => 'Новости'
+            'title' => 'Новости',
+            'submenu' => null
         ],
         'paydelivery.php' => [
-            'title' => 'Доставка и оплата'
+            'title' => 'Доставка и оплата',
+            'submenu' => null
         ], 
         'contacts.php' => [
-            'title' => 'Контакты'
+            'title' => 'Контакты',
+            'submenu' => null
         ]
     );
 ?>
