@@ -1,9 +1,9 @@
 <?php
 	include('includes/lib.php');
 	include('includes/config.php');
-	include('application/views/includes/template_header.php');
 	$news_array = getNews();
 	$categories = getCategories();
+	include('application/views/includes/template_header.php');
 ?>
 	<article class="shipment-article">
 		<h1>Доставка</h1>

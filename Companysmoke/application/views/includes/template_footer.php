@@ -73,11 +73,8 @@
 			<ul class="footer-nav__list">
 				<?
 					$current_page = currentPage();
-					if ($current_page == 'news-detail.php') $current_page = 'news.php';
-					if ($current_page == 'product.php') $current_page = 'catalog.php';
-					if ($current_page == '') $current_page = 'index.php';
 					foreach ($menu as $menu_item=>$item) {
-						if($current_page == $menu_item) { 
+						if($current_page == $menu_item || ($item['activeLinks'] != null && in_array($current_page, $item['activeLinks']))) { 
 							echo '<li class="footer-nav__list-item"><span class="footer-nav__link">'.$item['title'].'</span></li>';
 						}
 						else {

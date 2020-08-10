@@ -1,4 +1,6 @@
 <?php
+include_once("includes/lib.php");
+include_once("includes/config.php");
 $news_array = getNews();
 $categories = getCategories();
 $feedback_bool = true;

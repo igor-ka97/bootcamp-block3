@@ -16,26 +16,32 @@
     $menu = array (
         'index.php'=> [
             'title' => 'Главная',
+            'activeLinks' => null,
             'submenu' => null
         ], 
         'catalog.php' => [
             'title' => 'Каталог',
-            'submenu' => getCategories()
+            'activeLinks' => null,
+            'submenu' => null
         ],
         'about.php' => [
             'title' => 'О компании',
+            'activeLinks' => null,
             'submenu' => null
         ], 
         'news.php' => [
             'title' => 'Новости',
+            'activeLinks' => null,
             'submenu' => null
         ],
         'paydelivery.php' => [
             'title' => 'Доставка и оплата',
+            'activeLinks' => null,
             'submenu' => null
         ], 
         'contacts.php' => [
             'title' => 'Контакты',
+            'activeLinks' => null,
             'submenu' => null
         ]
     );

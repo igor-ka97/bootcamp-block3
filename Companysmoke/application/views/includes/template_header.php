@@ -1,5 +1,9 @@
-
-
+<?
+extensionMenu($menu, 'Каталог', $categories);
+activeLinkMenu($menu, 'catalog.php', 'product.php');
+activeLinkMenu($menu, 'news.php', 'news-detail.php');
+activeLinkMenu($menu, 'index.php', '');
+?>
 <!DOCTYPE html>
 <html lang="ru">
 
@@ -39,10 +43,10 @@
 					<?
 						$current_page = currentPage();
 						foreach ($menu as $menu_item=>$item) {
-								if($current_page == $menu_item) { 
+								if($current_page == $menu_item || ($item['activeLinks'] != null && in_array($current_page, $item['activeLinks']))) { 
 									echo '<li class="header-nav-item"><span><span class="header-nav-item__link header-nav-item__link_current">'.$item['title'].'</span></span>';
 								
-								if($current_page == "catalog.php") {
+								if(isset($item['submenu'])) {
 									echo('<ul class="sub-menu">');
 									foreach($item['submenu'] as $category=>$cat_item) {
 										echo('<li class="sub-menu__list-item"><a class="sub-menu__link" href="catalog.php?id='.$category.'">'.$cat_item['title'].'</a></li>');

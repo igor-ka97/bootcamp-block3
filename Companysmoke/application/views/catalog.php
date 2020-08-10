@@ -19,11 +19,11 @@ include('includes/template_header.php');
 	<?endif?>
 	<span class="search-filter__item">
 		<label class="search-filter__label" for="price-from">Цена</label>
-		<input class="search-filter__input" step="0.01" type="number" min="0" name="price_from" id="price-from" value="<?=(isset($correct_param['price_from'])) ? $correct_param['price_from'] : null?>" placeholder="от">
+		<input class="search-filter__input" step="0.01" type="number" min="0" name="price_from" id="price-from" value="<?=(isset($correct_param['price_from'])) ? $correct_param['price_from'] : ''?>" placeholder="от">
 	</span>
 	<span class="search-filter__item">
 		<label class="search-filter__label" for="price-to">—</label>
-		<input class="search-filter__input" step="0.01" type="number" min="0" name="price_to" id="price-to" value="<?=(isset($correct_param['price_to'])) ? $correct_param['price_to'] : null?>" placeholder="до">
+		<input class="search-filter__input" step="0.01" type="number" min="0" name="price_to" id="price-to" value="<?=(isset($correct_param['price_to'])) ? $correct_param['price_to'] : ''?>" placeholder="до">
 	</span>
 	<input class="form-submit search-filter__apply" type="submit" value="Применить">
 </form>

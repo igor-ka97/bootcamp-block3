@@ -30,13 +30,25 @@ function getNews() {
     return $array;
 }
 
+function extensionMenu(&$menu, $menu_additem, $submenu) {
+    foreach($menu as $menu_item => $item) {
+        if ($item['title'] == $menu_additem) {
+            $menu[$menu_item]['submenu'] = $submenu;
+            return true;
+        }
+        if($item['submenu'] != NULL) extensionMenu($menu[$menu_item]['submenu'], $menu_additem, $submenu);
+    }
+    return false;
+}
+
+function activeLinkMenu(&$menu, $menu_addlink, $link) {
+    $menu[$menu_addlink]['activeLinks'][] = $link;
+}
+
 function currentPage() {
     $cur_url = $_SERVER['REQUEST_URI'];
 	$urls = explode('/', $cur_url);
     $urls[1] = (!empty($urls[1])) ? explode('?',$urls[1])[0] : null;
-    if ($urls[1] == 'news-detail.php') $current_page = 'news.php';
-	if ($urls[1] == 'product.php') $current_page = 'catalog.php';
-	if ($urls[1] == '') $current_page = 'index.php';
     return $urls[1];						
 }
 

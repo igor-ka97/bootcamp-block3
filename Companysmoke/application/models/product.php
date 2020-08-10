@@ -1,4 +1,6 @@
 <?php
+include_once("includes/lib.php");
+include_once("includes/config.php");
 $news_array = getNews();
 $categories = getCategories();
 $query = "SELECT EXISTS(SELECT product_id FROM Product WHERE product_id =".$correct_param['id'].") AS exists_product";
