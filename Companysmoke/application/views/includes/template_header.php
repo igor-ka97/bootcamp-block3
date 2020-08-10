@@ -48,8 +48,8 @@ activeLinkMenu($menu, 'index.php', '');
 								
 								if(isset($item['submenu'])) {
 									echo('<ul class="sub-menu">');
-									foreach($item['submenu'] as $category=>$cat_item) {
-										echo('<li class="sub-menu__list-item"><a class="sub-menu__link" href="catalog.php?id='.$category.'">'.$cat_item['title'].'</a></li>');
+									foreach($item['submenu'] as $submenu=>$submenu_item) {
+										echo('<li class="sub-menu__list-item"><a class="sub-menu__link" href="catalog.php?id='.$submenu.'">'.$submenu_item['title'].'</a></li>');
 									}
 									echo('</ul>');
 								}
