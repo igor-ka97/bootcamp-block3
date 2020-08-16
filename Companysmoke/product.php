@@ -5,12 +5,12 @@
     if ($id_product) {
         settype($id_product, "integer");
         if($id_product > 0) $correct_param['id'] = $id_product;
-        else header("location: 404.php");
+        else return404();
         if ($id_category) {
             settype($id_category, "integer");
             if($id_category > 0) $correct_param['cat_id'] = $id_category;
-            else header("location: 404.php");
+            else return404();
         }
-    } else header("location: 404.php");
+    } else return404();
     include('application/models/product.php');
 ?>

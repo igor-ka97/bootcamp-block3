@@ -3,6 +3,7 @@ include_once("includes/lib.php");
 include_once("includes/config.php");
 $news_array = getNews();
 $categories = getCategories();
+$menu = extensionMenu($menu, 'Каталог', $categories);
 $query = "SELECT COUNT(*) AS count FROM News";
 $result = mysqli_query($connection, $query);
 $result =  mysqli_fetch_assoc($result);

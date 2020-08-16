@@ -71,17 +71,14 @@
 		</div>
 		<nav class="footer-nav">
 			<ul class="footer-nav__list">
-				<?
-					$current_page = currentPage();
-					foreach ($menu as $menu_item=>$item) {
-						if($current_page == $menu_item || ($item['activeLinks'] != null && in_array($current_page, $item['activeLinks']))) { 
-							echo '<li class="footer-nav__list-item"><span class="footer-nav__link">'.$item['title'].'</span></li>';
-						}
-						else {
-							echo '<li class="footer-nav__list-item"><a class="footer-nav__link" href="'.$menu_item.'">'.$item['title'].'</a></li>';
-						}
-					}
-				?>
+				<?$current_page = currentPage();?>
+				<?foreach ($menu as $menu_item=>$item):?>
+					<?if($current_page == $menu_item || ($item['activeLinks'] != null && in_array($current_page, $item['activeLinks']))):?> 
+						<li class="footer-nav__list-item"><span class="footer-nav__link"><?=$item['title']?></span></li>
+					<?else:?> 
+						<li class="footer-nav__list-item"><a class="footer-nav__link" href="<?=$menu_item?>"><?=$item['title']?></a></li>
+					<?endif?>
+				<?endforeach?>
 			</ul>
 		</nav>
 		<div class="developer">

@@ -16,12 +16,17 @@
     $menu = array (
         'index.php'=> [
             'title' => 'Главная',
-            'activeLinks' => null,
+            'activeLinks' => array(
+                '',
+                '/'
+            ),
             'submenu' => null
         ], 
         'catalog.php' => [
             'title' => 'Каталог',
-            'activeLinks' => null,
+            'activeLinks' => array(
+                'product.php'
+            ),
             'submenu' => null
         ],
         'about.php' => [
@@ -31,7 +36,9 @@
         ], 
         'news.php' => [
             'title' => 'Новости',
-            'activeLinks' => null,
+            'activeLinks' => array(
+                'news-detail.php'
+            ),
             'submenu' => null
         ],
         'paydelivery.php' => [

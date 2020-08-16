@@ -3,7 +3,7 @@
     if($news_id) {
         if(settype($news_id, "integer")) {
             $current_param['news_id'] = $news_id;
-        } else header('location: 404.php');
-    } else header('location: 404.php');
+        } else return404();
+    } else return404();
     include('application/models/news-detail.php');
 ?>

@@ -20,6 +20,11 @@ function getCategories() {
     return $array;
 }
 
+function return404() {
+    header("HTTP/1.0 404 Not Found");
+    header("location: 404.php");
+}
+
 function getNews() {
     global $connection;
     $query = "SELECT news_id, title, date FROM News ORDER BY date LIMIT 0,".NEWSCOUNT;
@@ -30,19 +35,20 @@ function getNews() {
     return $array;
 }
 
-function extensionMenu(&$menu, $menu_additem, $submenu) {
+function extensionMenu($menu, $menu_additem, $submenu) {
     foreach($menu as $menu_item => $item) {
         if ($item['title'] == $menu_additem) {
             $menu[$menu_item]['submenu'] = $submenu;
-            return true;
+            return $menu;
         }
         if($item['submenu'] != NULL) extensionMenu($menu[$menu_item]['submenu'], $menu_additem, $submenu);
     }
-    return false;
+    return $menu;
 }
 
-function activeLinkMenu(&$menu, $menu_addlink, $link) {
+function activeLinkMenu($menu, $menu_addlink, $link) {
     $menu[$menu_addlink]['activeLinks'][] = $link;
+    return $menu;
 }
 
 function currentPage() {

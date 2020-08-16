@@ -1,8 +1,5 @@
 <?
-extensionMenu($menu, 'Каталог', $categories);
-activeLinkMenu($menu, 'catalog.php', 'product.php');
-activeLinkMenu($menu, 'news.php', 'news-detail.php');
-activeLinkMenu($menu, 'index.php', '');
+$menu = extensionMenu($menu, 'Каталог', $categories);
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -40,27 +37,22 @@ activeLinkMenu($menu, 'index.php', '');
 			<div class="wrapper">
 				<span class="menu-toggler">Меню</span>
 				<ul class="menu-togglable">
-					<?
-						$current_page = currentPage();
-						foreach ($menu as $menu_item=>$item) {
-								if($current_page == $menu_item || ($item['activeLinks'] != null && in_array($current_page, $item['activeLinks']))) { 
-									echo '<li class="header-nav-item"><span><span class="header-nav-item__link header-nav-item__link_current">'.$item['title'].'</span></span>';
-								
-								if(isset($item['submenu'])) {
-									echo('<ul class="sub-menu">');
-									foreach($item['submenu'] as $submenu=>$submenu_item) {
-										echo('<li class="sub-menu__list-item"><a class="sub-menu__link" href="catalog.php?id='.$submenu.'">'.$submenu_item['title'].'</a></li>');
-									}
-									echo('</ul>');
-								}
-								echo('</li>');
-							}
-						else {
-								echo '<li class="header-nav-item"><span><a class="header-nav-item__link" href="'.$menu_item.'">'.$item['title'].'</a></span></li>';
-							}
-						
-						}
-					?>
+					<?$current_page = currentPage()?>
+					<?foreach ($menu as $menu_item=>$item):?>
+						<?if($current_page == $menu_item || (is_array($item['activeLinks']) && in_array($current_page, $item['activeLinks']))):?>
+							<li class="header-nav-item"><span><span class="header-nav-item__link header-nav-item__link_current"><?=$item['title']?></span></span>
+							<?if(isset($item['submenu'])):?>
+								<ul class="sub-menu">
+								<?foreach($item['submenu'] as $submenu=>$submenu_item):?>
+									<li class="sub-menu__list-item"><a class="sub-menu__link" href="catalog.php?id=<?=$submenu?>"><?=$submenu_item['title']?></a></li>
+								<?endforeach?>
+								</ul>
+							<?endif?>
+							</li>
+						<?else:?> 
+							<li class="header-nav-item"><span><a class="header-nav-item__link" href="<?=$menu_item?>"><?=$item['title']?></a></span></li>
+						<?endif?>
+					<?endforeach?>
 				</ul>
 			</div>
 		</nav>
