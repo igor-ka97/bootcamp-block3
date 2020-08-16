@@ -1,6 +1,3 @@
-<?
-$menu = extensionMenu($menu, 'Каталог', $categories);
-?>
 <!DOCTYPE html>
 <html lang="ru">
 
